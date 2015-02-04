@@ -1063,6 +1063,13 @@
             }
 
             if (typeof data === 'string') {
+                // check for data URL
+                if (/^data:/.test(data)) {
+                    var base64 = data.split('base64,')[1];
+                    if (base64) {
+                        return base64;
+                    }
+                }
                 // window.btoa uses pseudo binary encoding, so unicode strings
                 // need to be converted before encoding
                 return btoa(unescape(encodeURIComponent(data)));
